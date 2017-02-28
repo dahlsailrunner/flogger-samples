@@ -3,3 +3,6 @@
 ################################################################################
 
 /mvc-todo/packages
+/mvc-todo/mvc-todo/bin
+/mvc-todo/mvc-todo/obj/Debug
+/mvc-todo/mvc-todo/App_Data
