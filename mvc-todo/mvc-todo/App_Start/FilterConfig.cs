@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using Flogging.Web.Filters;
 using System.Web.Mvc;
 
 namespace mvc_todo
@@ -7,7 +7,7 @@ namespace mvc_todo
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new TrackPerformanceAttribute(Constants.ProductName, Constants.LayerName));
         }
     }
 }
