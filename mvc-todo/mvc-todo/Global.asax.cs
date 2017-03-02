@@ -21,18 +21,15 @@ namespace mvc_todo
         protected void Application_Error(object sender, EventArgs e)
         {                        
             var ex = Server.GetLastError();
-            var httpContext = ((MvcApplication)sender).Context;
-
+            
             int httpStatus;
             string errorControllerAction;
 
-            Helper.GetHttpStatus(ex, out httpStatus);
-            var notFoundUrl = "";
+            Helper.GetHttpStatus(ex, out httpStatus);            
             switch (httpStatus)
             {
                 case 404:
-                    errorControllerAction = "NotFound";
-                    notFoundUrl = httpContext.Request.Url.ToString();
+                    errorControllerAction = "NotFound";                                   
                     break;
                 default:
                     Helper.LogWebError(Constants.ProductName, Constants.LayerName, ex);
@@ -40,14 +37,12 @@ namespace mvc_todo
                     break;
             }
 
-            
+            var httpContext = ((MvcApplication)sender).Context;
             httpContext.ClearError();
             httpContext.Response.Clear();
             httpContext.Response.StatusCode = ex is HttpException ? ((HttpException)ex).GetHttpCode() : 500;
             httpContext.Response.TrySkipIisCustomErrors = true;
-
-            httpContext.Items["NotFoundUrl"] = notFoundUrl;
-
+            
             var routeData = new RouteData();
             routeData.Values["controller"] = "Error";
             routeData.Values["action"] = errorControllerAction;

@@ -4,6 +4,8 @@ using System.Net;
 using System.Web.Mvc;
 using mvc_todo.Models;
 using System;
+using Flogging.Web.Filters;
+using Flogging.Web;
 
 namespace mvc_todo.Controllers
 {
@@ -11,21 +13,24 @@ namespace mvc_todo.Controllers
     {
         private readonly ToDoDbContext _db = new ToDoDbContext();
 
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "View Todos")]
         public ActionResult Index()
         {
-            return View(_db.ToDoItems.Where(a=> a.Id == 1).Include("BADSTUFF").ToList());
+            Helper.LogWebDiagnostic(Constants.ProductName, Constants.LayerName, "hello from todo index");
+            //return View(_db.ToDoItems.Where(a=> a.Id == 1).Include("BADSTUFF").ToList());
+            return View(_db.ToDoItems.ToList());
+
         }
-        
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "Create Todo")]        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Item,Completed")] ToDoItem toDoItem)
+        public ActionResult Create(ToDoItem toDoItem)
         {
             if (ModelState.IsValid)
             {
@@ -50,6 +55,7 @@ namespace mvc_todo.Controllers
             return View(toDoItem);
         }
 
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "Update Todo")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Item,Completed")] ToDoItem toDoItem)
@@ -76,7 +82,8 @@ namespace mvc_todo.Controllers
             }
             return View(toDoItem);
         }
-        
+
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "Remove Todo")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

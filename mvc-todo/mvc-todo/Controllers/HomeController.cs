@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Flogging.Web.Filters;
 using System.Web.Mvc;
 
 namespace mvc_todo.Controllers
 {
     public class HomeController : Controller
     {
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "View Home")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "View About")]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -20,6 +19,7 @@ namespace mvc_todo.Controllers
             return View();
         }
 
+        [TrackUsage(Constants.ProductName, Constants.LayerName, "View Contact")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
