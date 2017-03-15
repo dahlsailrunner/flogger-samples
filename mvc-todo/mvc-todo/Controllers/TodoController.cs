@@ -42,7 +42,7 @@ namespace mvc_todo.Controllers
                 //    //sp.ExecNonQuery();
             }
 
-                Helper.LogWebDiagnostic(Constants.ProductName, Constants.LayerName, "hello from todo index");
+            Helper.LogWebDiagnostic(Constants.ProductName, Constants.LayerName, "hello from todo index");
             //return View(_db.ToDoItems.Where(a=> a.Id == 1).Include("BADSTUFF").ToList());
             
             return View(_db.ToDoItems.ToList());
