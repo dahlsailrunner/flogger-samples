@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using Flogging.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Interception;
 
 namespace mvc_todo.Models
 {
@@ -12,6 +14,10 @@ namespace mvc_todo.Models
 
     public class ToDoDbContext : DbContext
     {
+        public ToDoDbContext()
+        {
+            DbInterception.Add(new FloggerEFInterceptor());
+        }
         public DbSet<ToDoItem> ToDoItems { get; set; }
     }
 

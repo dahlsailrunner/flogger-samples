@@ -6,6 +6,11 @@ using mvc_todo.Models;
 using System;
 using Flogging.Web.Filters;
 using Flogging.Web;
+using System.Configuration;
+using System.Data.SqlClient;
+using Flogging.Data;
+using Dapper;
+using System.Data;
 
 namespace mvc_todo.Controllers
 {
@@ -16,8 +21,30 @@ namespace mvc_todo.Controllers
         [TrackUsage(Constants.ProductName, Constants.LayerName, "View Todos")]
         public ActionResult Index()
         {
-            Helper.LogWebDiagnostic(Constants.ProductName, Constants.LayerName, "hello from todo index");
+            //var idParam = new SqlParameter("@Id", "efbadid");
+            //var itemParam = new SqlParameter("@Item", "Entity Framework updated todo");
+            //_db.Database.SqlQuery<int>("UpdateToDoWithError @Id, @Item", idParam, itemParam).ToList();
+
+            var connStr = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            using (var db = new SqlConnection(connStr.ConnectionString))
+            {
+                db.Open();
+
+                //var p = new DynamicParameters();
+                //p.Add("@Id", "badid");
+                //p.Add("@Item", "Dapper-looking todo");
+                db.DapperProcNonQuery("UpdateTodoWithError", new { Id = "badid", Item = "Dapper-looking todo" });
+                //db.Execute("UpdateTodoWithError", p, commandType: CommandType.StoredProcedure);
+
+                //    //var sp = new Sproc(db, "UpdateTodoWithError");
+                //    //sp.SetParam("@Id", "hello there!");
+                //    //sp.SetParam("@Item", "here is some new todo text");
+                //    //sp.ExecNonQuery();
+            }
+
+                Helper.LogWebDiagnostic(Constants.ProductName, Constants.LayerName, "hello from todo index");
             //return View(_db.ToDoItems.Where(a=> a.Id == 1).Include("BADSTUFF").ToList());
+            
             return View(_db.ToDoItems.ToList());
 
         }

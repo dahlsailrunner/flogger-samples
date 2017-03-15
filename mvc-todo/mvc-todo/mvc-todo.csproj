@@ -45,8 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Flogging.Core">
       <HintPath>..\..\..\flogger\Flogger.Core\bin\Debug\Flogging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Flogging.Data">
+      <HintPath>..\..\..\flogger\Flogging\Flogging.Data\bin\Debug\Flogging.Data.dll</HintPath>
     </Reference>
     <Reference Include="Flogging.Web">
       <HintPath>..\..\..\flogger\Flogger.Web\bin\Debug\Flogging.Web.dll</HintPath>
@@ -198,6 +204,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\StoredProc.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -259,9 +266,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
